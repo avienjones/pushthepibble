@@ -17,10 +17,13 @@ function pibbleclick() {
   if (pibblespeed <= 0.33) {
     pibblespeed = 1.5;
   } else {
-    if (!(pibblespeed >= 5)) {
-      pibblespeed += 0.15 * (5 - pibblespeed);
+    if (!(pibblespeed >= 3.5)) {
+      pibblespeed += 0.15 * (3.5 - pibblespeed);
     }
   }
+
+  pibbleEl.style.cursor = "initial";
+  pibbleEl.onclick = null;
 
   pushcount++;
 
@@ -57,6 +60,9 @@ setInterval(() => {
 
 // After each loop
 pibbleEl.addEventListener('ended', function() {
+  pibbleEl.style.cursor = "pointer";
+  pibbleEl.onclick = pibbleclick;
+
   if (pibblespeed > 0.33) {
     pibbleEl.currentTime = 0;
     pibbleEl.play();
