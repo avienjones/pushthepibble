@@ -1,0 +1,30 @@
+body {
+	background: url("img/background.jpg");
+	background-position: center;
+  	background-repeat: no-repeat;
+  	background-size: cover;
+  	font-family: sans-serif;
+	user-select: none;
+}
+
+h1 {
+	text-align: center;
+	margin-top: 10vh;
+	margin-bottom: 15vh;
+	font-size: 7.5vh;
+}
+
+h2 {
+	text-align: center;
+	display: block;
+	opacity: 0;
+	transition: opacity 1s ease;
+	margin-top: 7.5vh;
+	font-size: 3.5vh;
+}
+
+#pibble {
+	cursor: pointer;
+	aspect-ratio: auto;
+	height: 40%;
+}
