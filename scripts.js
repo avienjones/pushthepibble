@@ -3,8 +3,12 @@ const pushCountEl = document.getElementById("pushcount");
 
 var pibblespeed = 0;
 var pushcount = 0;
+var muted = false;
 
 function playsound(soundpath) {
+  if (muted) {
+    return;
+  }
   const sound = new Audio(soundpath);
   sound.play();
 }
@@ -44,8 +48,6 @@ setInterval(function() {
   } else {
     pibblespeed = 0.33;
   }
-
-  console.log(pibblespeed);
 }, 1000);
 
 // Pibble animation
@@ -84,6 +86,10 @@ setInterval(()=>{
 
 // Background Music 
 document.onclick = () => {
+  if (muted) {
+    return;
+  }
+
   const sound = new Audio("sfx/nature-loop.wav");
   sound.volume = 0;
   sound.loop = true;
@@ -102,3 +108,8 @@ document.onclick = () => {
 
   document.onclick = null; // Only play once
 };
+
+if (navigator.userAgent.includes("Safari") && !navigator.userAgent.includes("Chrome/")) {
+  document.getElementById("error").style.display = "initial";
+  muted = true;
+}

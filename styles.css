@@ -28,3 +28,29 @@ h2 {
 	aspect-ratio: auto;
 	height: 40%;
 }
+
+#error {
+	background-color: white;
+	z-index: 999;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+
+#error img {
+	aspect-ratio: auto;
+	height: 70vh;
+}
+
+h3 {
+	text-align: center;
+	font-size: 5vh;
+}
+
+h4 {
+	text-align: center;
+	font-size: 2vh;
+}
