@@ -149,7 +149,7 @@ document.onclick = () => {
   document.onclick = null; // Only play once
 };
 
-if (navigator.userAgent.includes("Safari") && !(navigator.userAgent.includes("Chrome/") || navigator.userAgent.includes("Mobile/"))) {
+if ((navigator.userAgent.includes("Safari") || navigator.userAgent.includes("Mobile")) && !navigator.userAgent.includes("Chrome/")) {
   document.getElementById("error").style.display = "initial";
   document.getElementById("useragent").textContent = "User agent: " + navigator.userAgent;
   muted = true;
