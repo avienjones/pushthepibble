@@ -7,6 +7,7 @@ var pibblespeed = 0;
 var pushcount = 0;
 var muted = false;
 var superspeed = false;
+var superspeedwind = new Audio("sfx/wind.wav");
 
 function playsound(soundpath) {
   if (muted) {
@@ -76,6 +77,18 @@ setInterval(() => {
   } else {
     speedometerEl.style.opacity = 0;
   }
+
+  if (superspeed == true) {
+    if (pibblespeed > 7) {
+      if (superspeedwind.paused == true) {
+        superspeedwind.play();
+      }
+    } else {
+      if (superspeedwind.paused == false) {
+        superspeedwind.pause();
+      }
+    }
+  }
 }, 10);
 
 // After each loop
@@ -104,7 +117,7 @@ pibbleEl.addEventListener('ended', function() {
 // Random Barks
 setInterval(()=>{
   const rng = Math.floor(Math.random() * (11));
-  if (rng == 10) {
+  if (rng == 10 && !(pibblespeed > 7)) {
     const bark = Math.floor(Math.random() * (4 - 1) + 1);
     playsound("sfx/bark" + bark.toString() + ".wav");
   }
@@ -119,6 +132,7 @@ document.onclick = () => {
   const sound = new Audio("sfx/nature-loop.wav");
   sound.volume = 0;
   sound.loop = true;
+  sound.preload = "auto";
   sound.play();
 
   var fadein = setInterval(()=>{
@@ -151,3 +165,9 @@ function superspeedtoggle() {
     superspeedEl.textContent = "Super Speed: On";
   }
 }
+
+setInterval(() => {
+  if (superspeed == true && pibblespeed > 7) {
+    playsound("sfx/howl.wav");
+  }
+}, 8000);
