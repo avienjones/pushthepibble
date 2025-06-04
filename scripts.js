@@ -1,9 +1,12 @@
 const pibbleEl = document.getElementById("pibble");
 const pushCountEl = document.getElementById("pushcount");
+const superspeedEl = document.getElementById("superspeed");
+const speedometerEl = document.getElementById("speedometer");
 
 var pibblespeed = 0;
 var pushcount = 0;
 var muted = false;
+var superspeed = false;
 
 function playsound(soundpath) {
   if (muted) {
@@ -17,8 +20,14 @@ function pibbleclick() {
   if (pibblespeed <= 0.33) {
     pibblespeed = 1.5;
   } else {
-    if (!(pibblespeed >= 3.5)) {
-      pibblespeed += 0.15 * (3.5 - pibblespeed);
+    if (superspeed == true) {
+      if (!(pibblespeed >= 15)) {
+        pibblespeed += 0.75;
+      }
+    } else {
+      if (!(pibblespeed >= 3.5)) {
+        pibblespeed += 0.2;
+      }
     }
   }
 
@@ -26,6 +35,10 @@ function pibbleclick() {
   pibbleEl.onclick = null;
 
   pushcount++;
+
+  if (pushcount >= 500) {
+    superspeedEl.style.display = "block";
+  }
 
   const push = Math.floor(Math.random() * (3 - 1) + 1);
   playsound("sfx/push" + push.toString() + ".wav");
@@ -44,7 +57,7 @@ function pibbleclick() {
 
 // Pibble slowdown
 setInterval(function() {
-  var calcspeed = pibblespeed - (0.1 * (2 + pibblespeed));
+  var calcspeed = pibblespeed - (0.1 * (Math.pow(pibblespeed, 1.5)));
 
   if (calcspeed > 0.33) {
     pibblespeed = calcspeed;
@@ -56,6 +69,13 @@ setInterval(function() {
 // Pibble animation
 setInterval(() => {
   pibbleEl.playbackRate = pibblespeed;
+
+  if (pibblespeed > 3.5 && superspeed == true) {
+    speedometerEl.style.opacity = 1;
+    speedometerEl.textContent = "(" + (Math.round(pibblespeed * 1000) / 100).toString() + ") miles per hour";
+  } else {
+    speedometerEl.style.opacity = 0;
+  }
 }, 10);
 
 // After each loop
@@ -117,5 +137,17 @@ document.onclick = () => {
 
 if (navigator.userAgent.includes("Safari") && !navigator.userAgent.includes("Chrome/")) {
   document.getElementById("error").style.display = "initial";
+  document.getElementById("useragent").textContent = "User agent: " + navigator.userAgent;
   muted = true;
+}
+
+function superspeedtoggle() {
+  
+  if (superspeed == true) {
+    superspeed = false;
+    superspeedEl.textContent = "Super Speed: Off";
+  } else {
+    superspeed = true;
+    superspeedEl.textContent = "Super Speed: On";
+  }
 }
